@@ -1,3 +1,6 @@
+import { setDoc, doc, collection } from "firebase/firestore";
+import db from "../db/db.js";  // Asegúrate de que la conexión a Firebase sea correcta
+
 const products = [
     {
         id: "br563",
@@ -80,19 +83,18 @@ const products = [
         image: "/img/diseñoNight.jpg",
         category: "designs"
     }
+];
 
+const seedProducts = () => {
+    const productsRef = collection(db, "products");
+    products.forEach(({ id, ...dataProduct }) => {
+        const docRef = doc(productsRef, id); // Usamos el 'id' manual para asignarlo al documento
+        setDoc(docRef, dataProduct)
+            .then(() => console.log(`Producto ${id} subido correctamente`))
+            .catch((error) => console.error("Error al subir el producto: ", error));
+    });
 
-]
+    console.log("productos subidos");
+};
 
-
-//Obtener productos
-const getProducts = () => {
-    return new Promise((resolve, reject) => {
-      //Simulamos un retraso de red
-      setTimeout( ()=>{
-        resolve(products)
-      }, 2000 )
-    })
-  }
-  
-  export { getProducts }
+seedProducts();

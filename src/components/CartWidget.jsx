@@ -7,11 +7,13 @@ const CartWidget = () => {
 
   const {totalQuantity} = useContext(CartContext)
 
+  const quantity = totalQuantity()
+
   return (
   
     <Link  style= {{display: 'flex'}} to="/cart">
         <img src={iconCart} width={50} alt="" />
-        <p style= {{color: 'white', display: 'flex', alignItems: 'center', margin: '10px'}}>{totalQuantity()}</p>
+        <p style= {{color: 'white', display: 'flex', alignItems: 'center', margin: '10px'}}>{quantity >= 1 ? quantity : ""}</p>
     </Link>
   )
 }
